@@ -3,11 +3,13 @@ package service.impl;
 import dao.CompanyDao;
 import dao.impl.CompanyDaoImpl;
 import dto.CompanyDto;
+import dto.JobDto;
 import entity.Company;
 import mapper.Mapper;
 import service.CompanyService;
 
 import java.util.List;
+import java.util.Map;
 
 public class CompanyServiceImpl implements CompanyService {
 
@@ -46,6 +48,12 @@ public class CompanyServiceImpl implements CompanyService {
                 .stream()
                 .map(company -> Mapper.map(company,CompanyDto.class))
                 .toList();
+    }
+
+    @Override
+    public Map<JobDto, Long> countPerJobByCompany(String companyName) {
+
+        return Mapper.map(companyDao.countPerJobByCompany(companyName));
     }
 
     public static void main(String[] args) {

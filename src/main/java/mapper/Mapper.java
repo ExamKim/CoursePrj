@@ -4,9 +4,13 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import dto.ApplicationDto;
+import dto.JobDto;
 import entity.Application;
 import entity.Candidate;
 import entity.Job;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Mapper {
     private static ObjectMapper objectMapper;
@@ -34,5 +38,13 @@ public class Mapper {
         applicationDto.setCandidateId(application.getCandidate().getId());
         applicationDto.setCandidateName(application.getCandidate().getName());
         return applicationDto;
+    }
+    public static Map<JobDto,Long> map(Map<Job,Long> sourceMap){
+        Map<JobDto,Long> target= new LinkedHashMap<>();
+        sourceMap.forEach((job,count)->{
+            JobDto jobDto= map(job, JobDto.class);
+            target.put(jobDto,count);
+        });
+        return target;
     }
 }

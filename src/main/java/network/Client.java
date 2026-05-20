@@ -19,6 +19,7 @@ public class Client {
                 System.out.println("==Menu");
                 System.out.println("1. Find by company's id");
                 System.out.println("2. List compaies");
+                System.out.println("3. Count per job by company");
                 choice = scanner.nextInt();
 
                 switch (choice){
@@ -29,7 +30,13 @@ public class Client {
                     }
                     case 2 ->{
                         CommandType commandType= CommandType.COMPANY_LOAD_ALL;
+                        request = Request.builder().commandType(commandType).data(null).build();
 
+                    }
+                    case 3->{
+                        CommandType commandType= CommandType.COUNT_PER_JOB_BY_COMPANY;
+                        String companyName="FinGroup";
+                        request=Request.builder().commandType(commandType).data(companyName).build();
                     }
                 }
                 out.writeObject(request);

@@ -1,6 +1,7 @@
 package network;
 
 import dto.CompanyDto;
+import dto.JobDto;
 import service.CompanyService;
 import service.impl.CompanyServiceImpl;
 
@@ -10,6 +11,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -59,6 +62,19 @@ public class Server {
                             response.setMessage(companyDto!=null?"Found":"Not Found");
                         }
                         case COMPANY_LOAD_ALL -> {
+                            List<CompanyDto> companyDto= companyService.loadAll();
+                            response= new Response();
+                            response.setSuccess(true);
+                            response.setData(companyDto);
+                            response.setMessage(companyDto!=null?"Found c2": "Not Found");
+
+                        }
+                        case COUNT_PER_JOB_BY_COMPANY -> {
+                            String companyName=(String) request.getData();
+                            Map<JobDto, Long> jobDto= companyService.countPerJobByCompany(companyName);
+                            response= new Response();
+                            response.setSuccess(true);
+                            response.setData(jobDto);
 
                         }
                     }
